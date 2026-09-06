@@ -26,9 +26,6 @@ class OfferSeeder extends Seeder
             foreach (self::STAYS as $index => $stay) {
                 $basePrice = 40000 + ($property->id * 1500) + ($index * 5000);
 
-                // Both suppliers offer the same property on the same dates
-                // with different prices, so the "cheapest offer" search has
-                // a deterministic, manually verifiable winner.
                 $this->putOffer($supplierA, $property, $stay, $index, $basePrice);
                 $this->putOffer($supplierB, $property, $stay, $index, $basePrice + 2500);
             }
