@@ -17,6 +17,7 @@ final class SearchPropertiesRequest extends FormRequest
             'check_out' => ['required', 'date_format:Y-m-d', 'after:check_in'],
             'guests' => ['required', 'integer', 'min:1'],
             'per_page' => ['nullable', 'integer', 'min:1', 'max:100'],
+            'page' => ['nullable', 'integer', 'min:1'],
         ];
     }
 
@@ -47,6 +48,10 @@ final class SearchPropertiesRequest extends FormRequest
             'per_page' => [
                 'description' => 'Items per page (1-100).',
                 'example' => 15,
+            ],
+            'page' => [
+                'description' => 'Page number.',
+                'example' => 1,
             ],
         ];
     }
