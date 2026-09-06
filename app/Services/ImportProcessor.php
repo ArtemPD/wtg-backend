@@ -56,8 +56,10 @@ final class ImportProcessor
     /**
      * @param Import $import
      * @param Collection $chunk
-     * @return void
+     *
      * @throws Throwable
+     *
+     * @return void
      */
     private function processChunk(Import $import, Collection $chunk): void
     {

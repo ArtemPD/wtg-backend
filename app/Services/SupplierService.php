@@ -15,6 +15,6 @@ final class SupplierService
      */
     public function findByCode(string $code): Supplier
     {
-        return Supplier::query()->where('code', $code)->firstOrFail();
+        return Supplier::query()->where('code', $code)->first();
     }
 }

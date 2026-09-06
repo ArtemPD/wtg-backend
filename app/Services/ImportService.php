@@ -8,20 +8,16 @@ use App\DTO\Import\ImportOfferCollection;
 use App\Enums\ImportStatus;
 use App\Jobs\ProcessImportJob;
 use App\Models\Import;
+use App\Models\Supplier;
 use Carbon\CarbonImmutable;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
-final readonly class ImportService
+final class ImportService
 {
     /**
-     * @param SupplierService $supplierService
-     */
-    public function __construct(private SupplierService $supplierService) {}
-
-    /**
-     * @param string $supplierCode
+     * @param Supplier $supplier
      * @param string $externalImportId
      * @param CarbonImmutable $sentAt
      * @param ImportOfferCollection $offers
@@ -30,10 +26,8 @@ final readonly class ImportService
      *
      * @return Import
      */
-    public function register(string $supplierCode, string $externalImportId, CarbonImmutable $sentAt, ImportOfferCollection $offers): Import
+    public function register(Supplier $supplier, string $externalImportId, CarbonImmutable $sentAt, ImportOfferCollection $offers): Import
     {
-        $supplier = $this->supplierService->findByCode($supplierCode);
-
         DB::beginTransaction();
 
         try {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Api;
+namespace Tests\Feature\Api\Import;
 
 use App\Jobs\ProcessImportJob;
 use App\Models\Supplier;
