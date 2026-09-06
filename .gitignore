@@ -6,6 +6,10 @@
 .env.production
 .phpactor.json
 .phpunit.result.cache
+.scribe
+/storage/app/scribe/
+/public/vendor/scribe/
+/resources/views/scribe/
 /.fleet
 /.idea
 /.nova
