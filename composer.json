@@ -41,7 +41,7 @@
             "composer install",
             "@php artisan key:generate --ansi",
             "./vendor/bin/sail up -d",
-            "./vendor/bin/sail logs -f wtg-init"
+            "./vendor/bin/sail logs --tail=100 wtg-init"
         ],
         "start": [
             "./vendor/bin/sail up -d"
