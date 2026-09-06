@@ -14,11 +14,10 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      *
-     * Domain seeders (Supplier, Property, Offer) are added in later stages
-     * (see TASK.md, section 6 "Фабрики та сідери" and section 15).
+     * Property and Offer seeders are added in a later stage.
      */
     public function run(): void
     {
-        //
+        $this->call(SupplierSeeder::class);
     }
 }
