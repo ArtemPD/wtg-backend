@@ -11,13 +11,12 @@ class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    /**
-     * Seed the application's database.
-     *
-     * Property and Offer seeders are added in a later stage.
-     */
     public function run(): void
     {
-        $this->call(SupplierSeeder::class);
+        $this->call([
+            SupplierSeeder::class,
+            PropertySeeder::class,
+            OfferSeeder::class,
+        ]);
     }
 }
