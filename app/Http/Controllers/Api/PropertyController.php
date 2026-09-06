@@ -50,6 +50,7 @@ final class PropertyController extends Controller
             guests: (int)$request->validated('guests'),
             city: $request->validated('city'),
             perPage: (int)($request->validated('per_page') ?? 15),
+            page: (int)($request->validated('page') ?? 1),
         );
 
         return PropertyResource::collection($properties);

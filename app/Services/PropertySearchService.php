@@ -19,10 +19,11 @@ final class PropertySearchService
      * @param int $guests
      * @param string|null $city
      * @param int $perPage
+     * @param int $page
      *
      * @return Paginator
      */
-    public function search(CarbonImmutable $checkIn, CarbonImmutable $checkOut, int $guests, ?string $city = null, int $perPage = 15): Paginator
+    public function search(CarbonImmutable $checkIn, CarbonImmutable $checkOut, int $guests, ?string $city = null, int $perPage = 15, int $page = 1): Paginator
     {
         $ranked = DB::table('offers')
             ->join('properties', 'properties.id', '=', 'offers.property_id')
@@ -59,6 +60,6 @@ final class PropertySearchService
             ])
             ->orderBy('best.price')
             ->orderBy('properties.id')
-            ->simplePaginate($perPage);
+            ->simplePaginate(perPage: $perPage, page: $page);
     }
 }

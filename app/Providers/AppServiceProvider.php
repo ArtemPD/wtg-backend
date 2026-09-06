@@ -7,6 +7,7 @@ namespace App\Providers;
 use App\Services\ImportProcessor;
 use App\Services\ImportService;
 use App\Services\PropertySearchService;
+use App\Services\ReservationService;
 use App\Services\SupplierService;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ImportProcessor::class, ImportProcessor::class);
         $this->app->bind(ImportService::class, ImportService::class);
         $this->app->bind(PropertySearchService::class, PropertySearchService::class);
+        $this->app->bind(ReservationService::class, ReservationService::class);
     }
 
     /**

@@ -1,8 +1,12 @@
 <?php
 
+use App\Exceptions\DuplicateReservationException;
+use App\Exceptions\OfferExpiredException;
+use App\Exceptions\OfferSoldOutException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\JsonResponse;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -15,5 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(fn (OfferSoldOutException $e): JsonResponse => response()->json(['message' => $e->getMessage()], 409));
+        $exceptions->render(fn (OfferExpiredException $e): JsonResponse => response()->json(['message' => $e->getMessage()], 409));
+        $exceptions->render(fn (DuplicateReservationException $e): JsonResponse => response()->json(['message' => $e->getMessage()], 409));
     })->create();
