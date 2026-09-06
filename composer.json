@@ -40,7 +40,8 @@
             "@php -r \"file_exists('.env.testing') || copy('.env.testing.example', '.env.testing');\"",
             "composer install",
             "@php artisan key:generate --ansi",
-            "./vendor/bin/sail up"
+            "./vendor/bin/sail up -d",
+            "./vendor/bin/sail logs -f wtg-init"
         ],
         "start": [
             "./vendor/bin/sail up -d"
