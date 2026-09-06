@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Tests\Feature\Api\Import;
 
 use App\DTO\Import\ImportOfferCollection;
 use App\DTO\Import\ImportOfferDTO;

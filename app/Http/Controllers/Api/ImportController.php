@@ -6,14 +6,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreImportRequest;
-use App\Http\Resources\ImportAcceptedResource;
+use App\Http\Resources\Import\ImportAcceptedResource;
+use App\Http\Resources\Import\ImportResource;
 use App\Models\Import;
 use App\Services\ImportService;
+use App\Services\SupplierService;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\JsonResponse;
 use Knuckles\Scribe\Attributes\Endpoint;
 use Knuckles\Scribe\Attributes\Group;
-use Knuckles\Scribe\Attributes\Response;
 use Knuckles\Scribe\Attributes\ResponseFromApiResource;
 use Throwable;
 
@@ -26,8 +27,12 @@ final class ImportController extends Controller
 {
     /**
      * @param ImportService $importService
+     * @param SupplierService $supplierService
      */
-    public function __construct(private readonly ImportService $importService) {}
+    public function __construct(
+        private readonly ImportService $importService,
+        private readonly SupplierService $supplierService,
+    ) {}
 
     /**
      * @param StoreImportRequest $request
@@ -41,16 +46,31 @@ final class ImportController extends Controller
         description: 'Validates the payload, stores the import and queues it for processing. Returns immediately with 202.',
     )]
     #[ResponseFromApiResource(ImportAcceptedResource::class, Import::class, 202)]
-    #[Response(status: 422, description: 'Validation failed or unknown supplier code.')]
     public function store(StoreImportRequest $request): JsonResponse
     {
+        $supplier = $this->supplierService->findByCode($request->validated('supplier'));
+
         $import = $this->importService->register(
-            supplierCode: $request->validated('supplier'),
+            supplier: $supplier,
             externalImportId: $request->validated('external_import_id'),
             sentAt: CarbonImmutable::parse($request->validated('sent_at')),
             offers: $request->offers(),
         );
 
         return ImportAcceptedResource::make($import)->response()->setStatusCode(202);
+    }
+
+    /**
+     * @param Import $import
+     *
+     * @return ImportResource
+     */
+    #[Endpoint(title: 'Get import status')]
+    #[ResponseFromApiResource(ImportResource::class, Import::class, 200)]
+    public function show(Import $import): ImportResource
+    {
+        $import->load('supplier');
+
+        return ImportResource::make($import);
     }
 }
