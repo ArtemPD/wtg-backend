@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,14 +13,12 @@ class DatabaseSeeder extends Seeder
 
     /**
      * Seed the application's database.
+     *
+     * Domain seeders (Supplier, Property, Offer) are added in later stages
+     * (see TASK.md, section 6 "Фабрики та сідери" and section 15).
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::firstOrCreate(
-            ['email' => 'test@example.com'],
-            User::factory()->raw(['name' => 'Test User', 'email' => 'test@example.com'])
-        );
+        //
     }
 }
